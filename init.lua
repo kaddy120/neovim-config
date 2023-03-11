@@ -13,7 +13,7 @@ require('packer').startup(function(use)
   use 'maxmellon/vim-jsx-pretty'
   --- replace (use "rstacruz/sparkup") with emmet-vim
   -- use 'mattn/emmet-vim'
-
+  use 'rcarriga/nvim-notify' -- fency notification plugin
   use { -- LSP Configuration & Plugins
     'neovim/nvim-lspconfig',
     requires = {
@@ -41,9 +41,9 @@ require('packer').startup(function(use)
     run = ':TSUpdate',
     -- run = ':TSInstall tsx',
     -- commit = '9bfaf62e42bdcd042df1230e9188487e62a112c0'
-    run = function()
-      pcall(require('nvim-treesitter.install').update { with_sync = true })
-    end,
+    -- run = function()
+    --   pcall(require('nvim-treesitter.install').update { with_sync = true })
+    -- end,
   }
 
   use { -- Additional text objects via treesitter
@@ -51,8 +51,17 @@ require('packer').startup(function(use)
     after = 'nvim-treesitter',
   }
 
-  use 'digitaltoad/vim-pug' -- add pug syntex support
+  use 'digitaltoad/vim-pug' -- add pug syntex supportu
 
+  use 'mfussenegger/nvim-dap'
+  use 'theHamsta/nvim-dap-virtual-text'
+  use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"} }
+  use { "mxsdev/nvim-dap-vscode-js", requires = {"mfussenegger/nvim-dap"} }
+  use {
+    "microsoft/vscode-js-debug",
+    opt = true,
+    run = "npm install --legacy-peer-deps && npx gulp vsDebugServerBundle && mv dist out"
+  }
   use { -- nvim-tree, alternative to a nerdTree
     'nvim-tree/nvim-tree.lua',
     requires = {
@@ -95,6 +104,9 @@ require('packer').startup(function(use)
     end
   }
 
+  -- Floating terminal that is toggleable
+  use "akinsho/toggleterm.nvim"
+
   -- Git related plugins
   use 'tpope/vim-fugitive'
   use 'tpope/vim-rhubarb'
@@ -106,8 +118,19 @@ require('packer').startup(function(use)
   use 'numToStr/Comment.nvim' -- "gc" to comment visual regions/lines
   use 'tpope/vim-sleuth' -- Detect tabstop and shiftwidth automatically
 
+  use "nvim-telescope/telescope-dap.nvim" -- use telescope to interface dap
   -- Fuzzy Finder (files, lsp, etc)
-  use { 'nvim-telescope/telescope.nvim', branch = '0.1.x', requires = { 'nvim-lua/plenary.nvim' } }
+  use({
+    "nvim-telescope/telescope.nvim",
+    -- tag = "0.1.0",
+    branch = "0.1.x",
+    requires = { { "nvim-lua/plenary.nvim" }, { "HUAHUAI23/telescope-dapzzzz" } },
+    config = function()
+      require("telescope").setup({})
+      require('telescope').load_extension("dap")
+      require("telescope").load_extension("i23")
+    end,
+  })
 
   -- Fuzzy Finder Algorithm which requires local dependencies to be built. Only load if `make` is available
   use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make', cond = vim.fn.executable 'make' == 1 }
@@ -180,6 +203,10 @@ vim.o.ignorecase = true
 vim.o.smartcase = true
 
 
+
+-- vim.cmd("set spell spelllang=en_us") 
+vim.cmd("set directory=$HOME/.vim/tmp")
+vim.api.nvim_command('autocmd BufRead,BufNewFile *.md setlocal spell spelllang=en_us')
 vim.wo.linebreak = true
 
 -- Decrease update time
@@ -205,6 +232,11 @@ vim.keymap.set({ 'n', 'x' }, 'cp', '"+y')
 
 -- Paste from clipboard
 vim.keymap.set({ 'n', 'x' }, 'cv', '"+p')
+
+-- Keymap for opening init.lua
+vim.keymap.set('n', '<Leader>rc', '<cmd>vsp $MYVIMRC<cr>', { desc = 'Open luarc in vertical split' })
+vim.keymap.set('n', '<Leader>z', '<cmd>ZenMode<cr>', { desc = 'Open luarc in vertical split' })
+
 
 -- Keymaps for saving a file
 vim.keymap.set('n', '<Space>w', '<cmd>write<cr>', { desc = 'Save file' })
@@ -255,8 +287,226 @@ require('lualine').setup {
 vim.g.vimwiki_list = { { path = '~/Notes', syntax = 'markdown', ext = '.md',
   custom_wiki2html = '~/.local/share/nvim/site/pack/packer/start/vimwiki/autoload/vimwiki/customwiki2html.sh' } }
 vim.g.vimwiki_ext2syntax = { ['.md'] = 'markdown', ['.markdown'] = 'markdown', ['.mdown'] = 'markdown', }
+vim.g.vimwiki_global_ext = 0
 
+-- vim.api.nvim_command('autocmd BufLeave *.md mkview')
+-- vim.api.nvim_command('autocmd BufReadPost *.md silent! loadview')
+-- vim.api.nvim_command('autocmd BufWinLeave *.md mkview')
+
+-- vim.api.nvim_command('autocmd FileType markdown BufWinLeave * mkview')
+-- vim.api.nvim_command('autocmd FileType markdown BufWinEnter * silent! loadview')
+-- vim.api.nvim_command('autocmd FileType markdown BufReadPost *.md silent! loadview')
+-- vim.api.nvim_command('autocmd  BufWinEnter * lua print("Loading view for " .. vim.fn.expand("%"))')
+-- Ensure that when line wraps it does not cut in the middle of a word
+-- function loadview()
+--   local viewfile = vim.fn.expand('%:p') .. '.view'
+--   if vim.fn.filereadable(viewfile) == 1 then
+--     vim.cmd('silent loadview ' .. viewfile)
+--   end
+-- end
+-- vim.cmd('filetype plugin on')
+-- Keymaps for creating tables  
+vim.keymap.set('n','<leader>t2', '<cmd>VimwikiTable 2<cr>',{desc = '[t]able with [2] cols' })
+vim.keymap.set('n','<leader>t3', '<cmd>VimwikiTable 3<cr>',{desc = '[t]able with [3] cols'})
+vim.keymap.set('n','<leader>t4', '<cmd>VimwikiTable 4<cr>',{desc = '[t]able with [4] cols'})
+
+-- vim.o.foldlevel = 99
+-- vim.cmd('set foldenabled')
+-- vim.cmd('au FileType markdown setlocal foldlevel=99')
+-- vim.api.nvim_command('autocmd BufRead,BufNewFile *.md set foldmethod=syntax')
+-- vim.o.foldmethod=syntax
 -- Enable Comment.nvim
+--
+-- fold settings
+
+--  folds are defined by a user-defined expression (tree-sitter)
+-- vim.o.foldmethod = 'syntax'
+
+
+
+-- Enable dap 
+
+vim.keymap.set('n', '<F5>', function() require('dap').continue() end)
+vim.keymap.set('n', '<F10>', function() require('dap').step_over() end)
+vim.keymap.set('n', '<F11>', function() require('dap').step_into() end)
+vim.keymap.set('n', '<F12>', function() require('dap').step_out() end)
+vim.keymap.set('n', '<Leader>b', function() require('dap').toggle_breakpoint() end)
+vim.keymap.set('n', '<Leader>B', function() require('dap').set_breakpoint() end)
+vim.keymap.set('n', '<Leader>lp', function() require('dap').set_breakpoint(nil, nil, vim.fn.input('Log point message: ')) end)
+vim.keymap.set('n', '<Leader>dr', function() require('dap').repl.open() end)
+vim.keymap.set('n', '<Leader>dl', function() require('dap').run_last() end)
+vim.keymap.set({'n', 'v'}, '<Leader>dh', function()
+  require('dap.ui.widgets').hover()
+end)
+vim.keymap.set({'n', 'v'}, '<Leader>dp', function()
+  require('dap.ui.widgets').preview()
+end)
+vim.keymap.set('n', '<Leader>df', function()
+  local widgets = require('dap.ui.widgets')
+  widgets.centered_float(widgets.frames)
+end)
+vim.keymap.set('n', '<Leader>ds', function()
+  local widgets = require('dap.ui.widgets')
+  widgets.centered_float(widgets.scopes)
+end)
+
+require("dap-vscode-js").setup({
+  -- node_path = "node", -- Path of node executable. Defaults to $NODE_PATH, and then "node"
+  -- debugger_path = "(runtimedir)/site/pack/packer/opt/vscode-js-debug", -- Path to vscode-js-debug installation.
+  -- debugger_cmd = { "js-debug-adapter" }, -- Command to use to launch the debug server. Takes precedence over `node_path` and `debugger_path`.
+  adapters = { 'pwa-node', 'pwa-chrome', 'pwa-msedge', 'node-terminal', 'pwa-extensionHost' }, -- which adapters to register in nvim-dap
+  -- log_file_path = "(stdpath cache)/dap_vscode_js.log" -- Path for file logging
+  -- log_file_level = false -- Logging level for output to file. Set to false to disable file logging.
+  -- log_console_level = vim.log.levels.ERROR -- Logging level for output to console. Set to false to disable console output.
+})
+
+-- use nvim-dap events to open and close the windows automatically
+local dap, dapui = require("dap"), require("dapui")
+dap.listeners.after.event_initialized["dapui_config"] = function()
+  dapui.open()
+end
+dap.listeners.before.event_terminated["dapui_config"] = function()
+  dapui.close()
+end
+dap.listeners.before.event_exited["dapui_config"] = function()
+  dapui.close()
+end
+
+-- set dap log levvel to Trace
+dap.set_log_level('TRACE')
+
+-- custom adapter for running tasks before starting debug
+local custom_adapter = 'pwa-node-custom'
+dap.adapters[custom_adapter] = function(cb, config)
+  if config.preLaunchTask then
+    local async = require('plenary.async')
+    local notify = require('notify').async
+
+    async.run(function()
+      ---@diagnostic disable-next-line: missing-parameter
+      notify('Running [' .. config.preLaunchTask .. ']').events.close()
+    end, function()
+        vim.fn.system(config.preLaunchTask)
+        config.type = 'pwa-node'
+        dap.run(config)
+      end)
+  end
+end
+
+for _, language in ipairs({ "typescript", "javascript" }) do
+  dap.configurations[language] = {
+    {
+      name = "Launch file",
+      type = "pwa-node",
+      request = "launch",
+      program = "${file}",
+      cwd = "${workspaceFolder}",
+      rootPath = "${workspaceFolder}",
+      skipFiles = { '<node_internals>/**' },
+      sourceMaps = true,
+      protocol = 'inspector',
+      console = 'integratedTerminal',
+    },
+    {
+      name = "Attach",
+      type = "pwa-node",
+      request = "attach",
+      processId = require'dap.utils'.pick_process,
+      cwd = "${workspaceFolder}",
+      localRoot = "./",
+      restart = true,
+      resolveSourceMapLocations = {"${workspaceFolder}/**", "!**/node_modules/**"},
+      sourceMaps = true,
+      skipFiles = { '<node_internals>/**' },
+      trace = true,
+      protocol = 'insepector',
+    },
+    {
+      name = 'Debug Main Process (Electron)',
+      type = 'pwa-node',
+      request = 'launch',
+      program = '${workspaceFolder}/node_modules/.bin/electron',
+      args = {
+        '${workspaceFolder}/dist/index.js',
+      },
+      outFiles = {
+        '${workspaceFolder}/dist/*.js',
+      },
+      resolveSourceMapLocations = {
+        '${workspaceFolder}/dist/**/*.js',
+        '${workspaceFolder}/dist/*.js',
+      },
+      rootPath = '${workspaceFolder}',
+      cwd = '${workspaceFolder}',
+      sourceMaps = true,
+      skipFiles = { '<node_internals>/**' },
+      protocol = 'inspector',
+      console = 'integratedTerminal',
+    },
+    {
+      name = 'Compile & Debug Simple TS',
+      type = custom_adapter,
+      request = 'launch',
+      preLaunchTask = 'npm run build-ts',
+      -- preLaunchTask = 'tsc',
+      program = '${workspaceFolder}/out/index.js',
+      -- program = '${file}/',
+      -- args = {
+      --   '${workspaceFolder}/out/helloworld.js',
+      -- },
+      outFiles = {
+        '${workspaceFolder}/out/*.js',
+      },
+      resolveSourceMapLocations = {
+        '${workspaceFolder}/out/**/*.js',
+        '${workspaceFolder}/out/*.js',
+      },
+      rootPath = '${workspaceFolder}',
+      cwd = '${workspaceFolder}',
+      sourceMaps = true,
+      skipFiles = { '<node_internals>/**' },
+      protocol = 'inspector',
+      console = 'integratedTerminal',
+    },
+    {
+      type = "pwa-node",
+      request = "launch",
+      name = "Debug Jest Tests",
+      -- trace = true, -- include debugger info
+      runtimeExecutable = "node",
+      runtimeArgs = {
+        "./node_modules/jest/bin/jest.js",
+        "--runInBand",
+      },
+      rootPath = "${workspaceFolder}",
+      cwd = "${workspaceFolder}",
+      console = "integratedTerminal",
+      internalConsoleOptions = "neverOpen",
+    },
+    {
+      type = "pwa-node",
+      request = "launch",
+      name = "Debug Mocha Tests",
+      -- trace = true, -- include debugger info
+      runtimeExecutable = "node",
+      runtimeArgs = {
+        "./node_modules/mocha/bin/mocha.js",
+      },
+      rootPath = "${workspaceFolder}",
+      cwd = "${workspaceFolder}",
+      console = "integratedTerminal",
+      internalConsoleOptions = "neverOpen",
+    }
+  }
+end
+
+require("dapui").setup()
+
+require("nvim-dap-virtual-text").setup{
+  virt_text_win_col = 80,
+  highlight_changed_variables = true
+}
+
 require('Comment').setup()
 
 -- Enable autopairs completion
@@ -414,9 +664,6 @@ local on_attach = function(_, bufnr)
     vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
   end
 
-
-
-
   nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
   nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
 
@@ -483,12 +730,18 @@ local servers = {
         checkThirdParty = false
       },
       telemetry = { enable = false },
+      completion = {
+        callSnippet = "Replace"
+      }
     },
   },
 }
 
 -- Setup neovim lua configuration
-require('neodev').setup()
+require("neodev").setup({
+  library = { plugins = { "nvim-dap-ui" }, types = true },
+  ...
+})
 --
 -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
 local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -566,3 +819,85 @@ cmp.setup {
 require("luasnip.loaders.from_vscode").lazy_load()
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
+local status_ok, toggleterm = pcall(require, "toggleterm")
+if not status_ok then
+  return
+end
+
+toggleterm.setup {
+  size = 10,
+  open_mapping = [[<c-t>]],
+  hide_numbers = true,
+  shade_filetypes = {},
+  shade_terminals = true,
+  shading_factor = 2,
+  start_in_insert = true,
+  insert_mappings = true,
+  persist_size = true,
+  direction = "horizontal",
+  close_on_exit = true,
+  shell = vim.o.shell,
+  float_opts = {
+    border = "curved",
+    winblend = 0,
+    highlights = {
+      border = "Normal",
+      background = "Normal",
+    },
+  },
+}
+
+function _G.set_terminal_keymaps()
+  local opts = { noremap = true }
+  vim.api.nvim_buf_set_keymap(0, 't', '<esc>', [[<C-\><C-n>]], opts)
+  -- vim.api.nvim_buf_set_keymap(0, "t", "jk", [[<C-\><C-n>]], opts)
+  vim.api.nvim_buf_set_keymap(0, "t", "<C-h>", [[<C-\><C-n><C-W>h]], opts)
+  vim.api.nvim_buf_set_keymap(0, "t", "<C-j>", [[<C-\><C-n><C-W>j]], opts)
+  vim.api.nvim_buf_set_keymap(0, "t", "<C-k>", [[<C-\><C-n><C-W>k]], opts)
+  vim.api.nvim_buf_set_keymap(0, "t", "<C-l>", [[<C-\><C-n><C-W>l]], opts)
+end
+
+vim.cmd "autocmd! TermOpen term://* lua set_terminal_keymaps()"
+
+local Terminal = require("toggleterm.terminal").Terminal
+local lazygit = Terminal:new {
+  cmd = "lazygit",
+  hidden = true,
+  direction = "float",
+  float_opts = {
+    border = "none",
+    width = 100000,
+    height = 100000,
+  },
+  on_open = function(_)
+    vim.cmd "startinsert!"
+    -- vim.cmd "set laststatus=0"
+  end,
+  on_close = function(_)
+    -- vim.cmd "set laststatus=3"
+  end,
+  count = 99,
+}
+
+function _LAZYGIT_TOGGLE()
+  lazygit:toggle()
+end
+
+local node = Terminal:new { cmd = "node", hidden = true }
+
+function _NODE_TOGGLE()
+  node:toggle()
+end
+
+local ncdu = Terminal:new { cmd = "ncdu", hidden = true }
+
+function _NCDU_TOGGLE()
+  ncdu:toggle()
+end
+
+local htop = Terminal:new { cmd = "htop", hidden = true }
+
+function _HTOP_TOGGLE()
+  htop:toggle()
+end
+
