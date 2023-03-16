@@ -17,7 +17,6 @@ local on_attach = function(_, bufnr)
 
   nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
   nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
-
   nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
   nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
   nmap('gI', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
@@ -28,6 +27,11 @@ local on_attach = function(_, bufnr)
   nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
   nmap('<Space>k', vim.lsp.buf.signature_help, 'Signature Documentation')
 
+-- Diagnostic keymaps
+  nmap('[d', vim.diagnostic.goto_prev, '')
+  nmap(']d', vim.diagnostic.goto_next, '')
+  nmap('<leader>e', vim.diagnostic.open_float, '')
+  nmap('<leader>q', vim.diagnostic.setloclist, '')
   -- Lesser used LSP functionality
   nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
   nmap('<leader>wa', vim.lsp.buf.add_workspace_folder, '[W]orkspace [A]dd Folder')
@@ -43,8 +47,6 @@ local on_attach = function(_, bufnr)
 end
 -- Mapping for formating a buffer
 vim.keymap.set('n', '<space>f', '<cmd>Format<cr>', { noremap = true, silent = true, buffer = 0 })
-
--- vim.keymap.set('i', '<C-k>', vim.lsp.buf.signature_help, { silent = true })
 
 -- Enable the following language servers
 --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
