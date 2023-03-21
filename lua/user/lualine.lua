@@ -8,7 +8,8 @@ end
 lualine.setup {
   options = {
     icons_enabled = true,
-    theme = 'onedark',
+    -- theme = 'onedark',
+    theme = 'vscode',
     component_separators = '|',
     section_separators = '',
     disabled_filetypes = {
