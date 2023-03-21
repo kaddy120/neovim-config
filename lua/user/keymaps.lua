@@ -14,6 +14,11 @@ vim.keymap.set('n', '<C-h>', '<C-w>h', { desc = 'Go to the right window' })
 vim.keymap.set('n', '<C-j>', '<C-w>j', { desc = 'Go to the bottom window' })
 vim.keymap.set('n', '<C-k>', '<C-w>k', { desc = 'Go to the top window' })
 vim.keymap.set('n', '<C-l>', '<C-w>l', { desc = 'Go to the left window' })
+-- Keymaps for creating window splits
+vim.keymap.set('n', '<Leader>v', '<C-w>v', { desc = 'Create vertical split' })
+vim.keymap.set('n', '<Leader>h', '<C-w>s', { desc = 'Create horizontal split' })
+vim.keymap.set('n', '<Leader>cc', '<C-w>c', { desc = 'Close window' })
+
 
 local opts = { silent = true }
 -- Resize with arrows
@@ -32,7 +37,6 @@ vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 -- Remap for dealing with word wrap
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
-
 
 
 

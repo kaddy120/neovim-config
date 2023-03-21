@@ -76,18 +76,18 @@ local servers = {
       },
     }
   },
-  sumneko_lua = {
-    Lua = {
-      workspace = {
-        library = vim.api.nvim_get_runtime_file("", true),
-        checkThirdParty = false
-      },
-      telemetry = { enable = false },
-      completion = {
-        callSnippet = "Replace"
-      }
-    },
-  },
+  -- sumneko_lua = {
+  --   Lua = {
+  --     workspace = {
+  --       library = vim.api.nvim_get_runtime_file("", true),
+  --       checkThirdParty = false
+  --     },
+  --     telemetry = { enable = false },
+  --     completion = {
+  --       callSnippet = "Replace"
+  --     }
+  --   },
+  -- },
 }
 
 -- Setup neovim lua configuration
