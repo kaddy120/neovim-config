@@ -3,15 +3,21 @@ local ok_status, telescope = pcall(require, "telescope")
 if not ok_status then
   return
 end
+
+local actions = require("telescope.actions")
+local trouble = require("trouble.providers.telescope")
+
 -- [[ Configure Telescope ]]
 -- See `:help telescope` and `:help telescope.setup()`
 telescope.setup {
   defaults = {
     mappings = {
       i = {
+        ["<C-q>"] = trouble.open_with_trouble,
         ['<C-u>'] = false,
         ['<C-d>'] = false,
       },
+      n = { ["<C-q>"] = trouble.open_with_trouble },
     },
   },
 }

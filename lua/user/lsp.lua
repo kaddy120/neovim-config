@@ -27,7 +27,7 @@ local on_attach = function(_, bufnr)
   nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
   nmap('<Space>k', vim.lsp.buf.signature_help, 'Signature Documentation')
 
--- Diagnostic keymaps
+  -- Diagnostic keymaps
   nmap('[d', vim.diagnostic.goto_prev, '')
   nmap(']d', vim.diagnostic.goto_next, '')
   nmap('<leader>e', vim.diagnostic.open_float, '')
@@ -44,9 +44,9 @@ local on_attach = function(_, bufnr)
   vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
     vim.lsp.buf.format()
   end, { desc = 'Format current buffer with LSP' })
+  nmap('<leader>f', '<cmd>Format<cr>', 'Format current buffer')
 end
 -- Mapping for formating a buffer
-vim.keymap.set('n', '<space>f', '<cmd>Format<cr>', { noremap = true, silent = true, buffer = 0 })
 
 -- Enable the following language servers
 --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.

@@ -13,5 +13,3 @@ vim.keymap.set('n','<leader>t2', '<cmd>VimwikiTable 2<cr>',{desc = '[t]able with
 vim.keymap.set('n','<leader>t3', '<cmd>VimwikiTable 3<cr>',{desc = '[t]able with [3] cols'})
 vim.keymap.set('n','<leader>t4', '<cmd>VimwikiTable 4<cr>',{desc = '[t]able with [4] cols'})
 
-
-

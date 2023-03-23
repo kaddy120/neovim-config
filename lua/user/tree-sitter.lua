@@ -59,6 +59,14 @@ require('nvim-treesitter.configs').setup {
       },
     },
   },
+  context_commentstring = {
+    enable = true,
+    enable_autocmd = false,
+    config = {
+      typescript = { __default = '// %s', __multiline = '/* %s */' },
+      typescriptreact = { __default = '// %s', __multiline = '/* %s */' },
+    }
+  }
 }
 
 local parser_configs = require("nvim-treesitter.parsers").get_parser_configs()
