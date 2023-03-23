@@ -19,9 +19,9 @@ require('vscode').setup({
     disable_nvimtree_bg = true,
 
     -- Override colors (see ./lua/vscode/colors.lua)
-    color_overrides = {
-        vscLineNumber = '#FFFFFF',
-    },
+    -- color_overrides = {
+    --     vscLineNumber = '#FFFFFF',
+    -- },
 
     -- Override highlight groups (see ./lua/vscode/theme.lua)
     group_overrides = {
@@ -31,3 +31,7 @@ require('vscode').setup({
     }
 })
 require('vscode').load()
+
+-- Switching Themes:
+-- :lua require('vscode').load('light')
+-- :lua require('vscode').load('dark')

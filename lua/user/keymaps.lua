@@ -27,8 +27,6 @@ vim.keymap.set("n", "<C-A-Down>", ":resize +2<CR>", opts)
 vim.keymap.set("n", "<C-A-Left>", ":vertical resize -2<CR>", opts)
 vim.keymap.set("n", "<C-A-Right>", ":vertical resize +2<CR>", opts)
 
--- Toggle NvimTree
-vim.keymap.set({ '', 'i', 't' }, '<C-b>', '<cmd>NvimTreeToggle<cr>', { desc = 'Toggle NvimTree' })
 
 -- Keymaps for better default experience
 -- See `:help vim.keymap.set()`

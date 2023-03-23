@@ -8,3 +8,6 @@ if not status_ok then
 end
 
 nvim_tree.setup()
+
+-- Toggle NvimTree
+vim.keymap.set({ 'n', 'i', 't' }, '<C-b>', '<cmd>NvimTreeToggle<cr>', { desc = 'Toggle NvimTree' })
