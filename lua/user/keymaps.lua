@@ -22,11 +22,13 @@ vim.keymap.set('n', '<Leader>cc', '<C-w>c', { desc = 'Close window' })
 
 local opts = { silent = true }
 -- Resize with arrows
-vim.keymap.set("n", "<C-A-Up>", ":resize -2<CR>", opts)
+vim.keymap.set("n", "<C-A-Up>", "<resize -2<CR>", opts)
 vim.keymap.set("n", "<C-A-Down>", ":resize +2<CR>", opts)
 vim.keymap.set("n", "<C-A-Left>", ":vertical resize -2<CR>", opts)
 vim.keymap.set("n", "<C-A-Right>", ":vertical resize +2<CR>", opts)
 
+vim.keymap.set("v", "p", '"_dP', opts)
+-- keymap("v", "P", '"_dP', opts)
 
 -- Keymaps for better default experience
 -- See `:help vim.keymap.set()`
@@ -37,6 +39,6 @@ vim.keymap.set({ 'i'}, 'jk', '<Esc>', { silent = true })
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
--- Navigate buffers
 vim.keymap.set("n", "<S-Right>", ":bnext<CR>", opts)
+-- Navigate buffers
 vim.keymap.set("n", "<S-Left>", ":bprevious<CR>", opts)
