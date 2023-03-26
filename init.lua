@@ -19,6 +19,7 @@ require "user.trouble"
 require "user.null-ls"
 require "user.colorizer"
 require "user.bufferline"
+require "user.nvim-cmp"
 
 vim.opt_local.suffixesadd:prepend('.lua')
 vim.opt_local.suffixesadd:prepend('init.lua')

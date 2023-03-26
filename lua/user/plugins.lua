@@ -47,11 +47,22 @@ require("packer").startup(function(use)
 		"hrsh7th/nvim-cmp",
 		requires = {
 			"hrsh7th/cmp-nvim-lsp",
-			"L3MON4D3/LuaSnip",
-			"saadparwaiz1/cmp_luasnip",
+			"hrsh7th/cmp-buffer",
+			"hrsh7th/cmp-path",
+			"hrsh7th/cmp-cmdline",
 			"hrsh7th/cmp-nvim-lsp-signature-help",
+			"saadparwaiz1/cmp_luasnip",
+			"neovim/nvim-lspconfig",
 		},
 	})
+	use({
+		"L3MON4D3/LuaSnip",
+		-- follow latest release.
+		-- tag = "v<CurrentMajor>.*",
+		-- install jsregexp (optional!:).
+		run = "make install_jsregexp",
+	})
+
 	use("jose-elias-alvarez/null-ls.nvim")
 	use("rafamadriz/friendly-snippets") -- VS-Code like snippet
 

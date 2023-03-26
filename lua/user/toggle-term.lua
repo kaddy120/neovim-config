@@ -29,12 +29,13 @@ toggleterm.setup {
 function _G.set_terminal_keymaps()
   local opts = { noremap = true }
   vim.api.nvim_buf_set_keymap(0, 't', '<esc>', [[<C-\><C-n>]], opts)
-  vim.api.nvim_buf_set_keymap(0, 't', '<C-c>', [[<C-\><C-n>]], opts)
+  vim.api.nvim_buf_set_keymap(0, 't', 'jk', [[<C-\><C-n>]], opts)
   -- vim.api.nvim_buf_set_keymap(0, "t", "jk", [[<C-\><C-n>]], opts)
   vim.api.nvim_buf_set_keymap(0, "t", "<C-h>", [[<C-\><C-n><C-W>h]], opts)
   vim.api.nvim_buf_set_keymap(0, "t", "<C-j>", [[<C-\><C-n><C-W>j]], opts)
   vim.api.nvim_buf_set_keymap(0, "t", "<C-k>", [[<C-\><C-n><C-W>k]], opts)
   vim.api.nvim_buf_set_keymap(0, "t", "<C-l>", [[<C-\><C-n><C-W>l]], opts)
+  vim.api.nvim_buf_set_keymap(0, "t", "gt", [[<C-\><C-n>gt]], opts)
 end
 
 vim.cmd "autocmd! TermOpen term://* lua set_terminal_keymaps()"
@@ -59,6 +60,77 @@ local lazygit = Terminal:new {
   count = 99,
 }
 
+local tabTerm = Terminal:new {
+  hidden = true,
+  direction = "tab",
+  on_open = function(term)
+    vim.cmd "startinsert!"
+    vim.api.nvim_buf_set_keymap(
+      term.bufnr,
+      "n",
+      "gt",
+      [[<C-\><C-n><cmd>tabnext<cr>]],
+      { noremap = true, silent = true }
+    )
+    vim.api.nvim_buf_set_keymap(
+      term.bufnr,
+      "t",
+      "gt",
+      [[<C-\><C-n><cmd>tabnext<cr>]],
+      { noremap = true, silent = true }
+    )
+    vim.api.nvim_buf_set_keymap(
+      term.bufnr,
+      "i",
+      "gt",
+      [[<C-\><C-n><cmd>tabnext<cr>]],
+      { noremap = true, silent = true }
+    )
+    -- vim.api.nvim_buf_set_keymap(term.bufnr, "", "gt", "<nop>", { noremap = true, silent = true })
+  end,
+  on_close = function(_)
+    vim.cmd "startinsert!"
+  end,
+  count = 9,
+}
+
+function _TAB_TERM()
+  tabTerm:toggle()
+end
+
+vim.api.nvim_set_keymap("n", "<S-t>", "<cmd>lua _TAB_TERM()<CR>", { noremap = true, silent = true })
+
+local vertical_term = Terminal:new {
+  direction = "vertical",
+  on_open = function(term)
+    vim.cmd "startinsert!"
+    vim.api.nvim_buf_set_keymap(term, 't', 'jk', [[<C-\><C-n>]], { noremap = true, silent = true })
+    vim.api.nvim_buf_set_keymap(
+      term.bufnr,
+      "n",
+      "<m-2>",
+      "<cmd>2ToggleTerm size=60 direction=vertical<cr>",
+      { noremap = true, silent = true }
+    )
+    vim.api.nvim_buf_set_keymap(
+      term.bufnr,
+      "t",
+      "<m-2>",
+      "<cmd>2ToggleTerm size=60 direction=vertical<cr>",
+      { noremap = true, silent = true }
+    )
+    vim.api.nvim_buf_set_keymap(
+      term.bufnr,
+      "i",
+      "<m-2>",
+      "<cmd>2ToggleTerm size=60 direction=vertical<cr>",
+      { noremap = true, silent = true }
+    )
+    vim.api.nvim_buf_set_keymap(term.bufnr, "", "<m-3>", "<nop>", { noremap = true, silent = true })
+  end,
+  count = 2,
+}
+
 function _LAZYGIT_TOGGLE()
   lazygit:toggle()
 end
@@ -80,4 +152,3 @@ local htop = Terminal:new { cmd = "htop", hidden = true }
 function _HTOP_TOGGLE()
   htop:toggle()
 end
-

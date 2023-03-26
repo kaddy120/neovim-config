@@ -22,7 +22,7 @@ vim.keymap.set('n', '<Leader>cc', '<C-w>c', { desc = 'Close window' })
 
 local opts = { silent = true }
 -- Resize with arrows
-vim.keymap.set("n", "<C-A-Up>", "<resize -2<CR>", opts)
+vim.keymap.set("n", "<C-A-Up>", ":resize -2<CR>", opts)
 vim.keymap.set("n", "<C-A-Down>", ":resize +2<CR>", opts)
 vim.keymap.set("n", "<C-A-Left>", ":vertical resize -2<CR>", opts)
 vim.keymap.set("n", "<C-A-Right>", ":vertical resize +2<CR>", opts)
