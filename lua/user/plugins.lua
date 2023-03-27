@@ -123,11 +123,9 @@ require("packer").startup(function(use)
 	use("vimwiki/vimwiki")
 	use({
 		"iamcco/markdown-preview.nvim",
-		run = "cd app && npm install",
-		setup = function()
-			vim.g.mkdp_filetypes = { "markdown" }
+		run = function()
+			vim.fn["mkdp#util#install"]()
 		end,
-		ft = { "markdown" },
 	})
 
 	use({

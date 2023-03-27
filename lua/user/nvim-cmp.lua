@@ -36,16 +36,19 @@ cmp.setup({
 		end, { "i", "s" }),
 	}),
 	sources = {
+		{ name = "luasnip" },
 		{ name = "nvim_lsp" },
 		{ name = "nvim_lsp_signature_help" },
 		{ name = "path" },
 		{ name = "nvim-lsp" },
 		{ name = "nvim-lspconfig" },
 		{ name = "cmdline" },
-		{ name = "luasnip" },
 	},
 	{
 		{ name = "buffer" },
+	},
+	completion = {
+		keyword_length = 5,
 	},
 })
 
@@ -53,6 +56,9 @@ cmp.setup.cmdline({ "/", "?" }, {
 	mapping = cmp.mapping.preset.cmdline(),
 	sources = {
 		{ name = "buffer" },
+	},
+	completion = {
+		keyword_length = 4,
 	},
 })
 
@@ -64,6 +70,9 @@ cmp.setup.cmdline(":", {
 	}, {
 		{ name = "cmdline" },
 	}),
+	completion = {
+		keyword_length = 4,
+	},
 })
 
 -- enable vscode-like snip
