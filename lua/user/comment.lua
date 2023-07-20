@@ -4,7 +4,6 @@ if not status_ok then
 end
 
 comment.setup{
-  ignore = "^$",
   pre_hook = function(ctx)
     -- For inlay hints
       local U = require "Comment.utils"
@@ -19,7 +18,7 @@ comment.setup{
       end
 
       return require("ts_context_commentstring.internal").calculate_commentstring {
-        key =type,
+        key = ctx.ctype == U.ctype.line and "__default" or "__multiline",
         location = location,
       }
     end

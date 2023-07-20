@@ -42,13 +42,12 @@ cmp.setup({
 		{ name = "path" },
 		{ name = "nvim-lsp" },
 		{ name = "nvim-lspconfig" },
-		{ name = "cmdline" },
 	},
 	{
 		{ name = "buffer" },
 	},
 	completion = {
-		keyword_length = 5,
+		keyword_length = 4,
 	},
 })
 
@@ -70,7 +69,7 @@ cmp.setup.cmdline(":", {
 	}, {
 		{ name = "cmdline" },
 	}),
-	completion = {
+	competion = {
 		keyword_length = 4,
 	},
 })

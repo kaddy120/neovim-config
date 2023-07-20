@@ -14,6 +14,8 @@ require("packer").startup(function(use)
 	--- replace (use "rstacruz/sparkup") with emmet-vim
 	-- use 'mattn/emmet-vim'
 	use("rcarriga/nvim-notify") -- fency notification plugin
+	use("windwp/nvim-ts-autotag") -- auto tags editing for things like html
+	use {'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async'} -- pretty code fold like vscode
 	use({ -- LSP Configuration & Plugins
 		"neovim/nvim-lspconfig",
 		requires = {
@@ -40,6 +42,7 @@ require("packer").startup(function(use)
 			})
 		end,
 	})
+
 	use("NvChad/nvim-colorizer.lua")
 	use("JoosepAlviste/nvim-ts-context-commentstring") -- language context commentting
 	use("sunjon/shade.nvim") --dims inactive window

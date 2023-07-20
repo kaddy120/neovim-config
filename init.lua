@@ -1,4 +1,5 @@
 require "user.plugins"
+require "user.vimtex"
 require "user.options"
 require "user.keymaps"
 require "user.vimwiki"
@@ -20,6 +21,7 @@ require "user.null-ls"
 require "user.colorizer"
 require "user.bufferline"
 require "user.nvim-cmp"
+require "user.ufo"
 
 vim.opt_local.suffixesadd:prepend('.lua')
 vim.opt_local.suffixesadd:prepend('init.lua')
