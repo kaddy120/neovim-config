@@ -9,6 +9,7 @@ vim.o.cursorline = true
 
 -- convert tab to space
 vim.o.expandtab = true
+vim.o.tabstop = 1
 
 -- set relativenumber
 --vim.wo.number = true

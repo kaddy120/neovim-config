@@ -15,7 +15,7 @@ require("packer").startup(function(use)
 	-- use 'mattn/emmet-vim'
 	use("rcarriga/nvim-notify") -- fency notification plugin
 	use("windwp/nvim-ts-autotag") -- auto tags editing for things like html
-	use {'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async'} -- pretty code fold like vscode
+	use({ "kevinhwang91/nvim-ufo", requires = "kevinhwang91/promise-async" }) -- pretty code fold like vscode
 	use({ -- LSP Configuration & Plugins
 		"neovim/nvim-lspconfig",
 		requires = {
@@ -66,6 +66,7 @@ require("packer").startup(function(use)
 		run = "make install_jsregexp",
 	})
 
+	use("mfussenegger/nvim-lint")
 	use("jose-elias-alvarez/null-ls.nvim")
 	use("rafamadriz/friendly-snippets") -- VS-Code like snippet
 
