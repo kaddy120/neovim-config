@@ -13,7 +13,7 @@ require("packer").startup(function(use)
 	use("maxmellon/vim-jsx-pretty")
 	--- replace (use "rstacruz/sparkup") with emmet-vim
 	-- use 'mattn/emmet-vim'
-	use("rcarriga/nvim-notify") -- fency notification plugin
+	--[[ use("rcarriga/nvim-notify") -- fency notification plugin ]]
 	use("windwp/nvim-ts-autotag") -- auto tags editing for things like html
 	use({ "kevinhwang91/nvim-ufo", requires = "kevinhwang91/promise-async" }) -- pretty code fold like vscode
 	use({ -- LSP Configuration & Plugins
@@ -73,11 +73,6 @@ require("packer").startup(function(use)
 	use({ -- Highlight, edit, and navigate code
 		"nvim-treesitter/nvim-treesitter",
 		run = ":TSUpdate",
-		-- run = ':TSInstall tsx',
-		-- commit = '9bfaf62e42bdcd042df1230e9188487e62a112c0'
-		-- run = function()
-		--   pcall(require('nvim-treesitter.install').update { with_sync = true })
-		-- end,
 	})
 
 	use({ -- Additional text objects via treesitter
