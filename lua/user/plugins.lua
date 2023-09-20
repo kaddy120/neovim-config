@@ -75,6 +75,16 @@ require("packer").startup(function(use)
 		run = ":TSUpdate",
 	})
 
+	use({
+		"antosha417/nvim-lsp-file-operations",
+		requires = {
+			"nvim-lua/plenary.nvim",
+			"nvim-tree/nvim-tree.lua",
+		},
+	})
+
+	use("jose-elias-alvarez/typescript.nvim")
+
 	use({ -- Additional text objects via treesitter
 		"nvim-treesitter/nvim-treesitter-textobjects",
 		after = "nvim-treesitter",
