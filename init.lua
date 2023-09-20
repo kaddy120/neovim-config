@@ -22,6 +22,7 @@ require "user.colorizer"
 require "user.bufferline"
 require "user.nvim-cmp"
 require "user.ufo"
+require "user.gitsigns"
 
 vim.opt_local.suffixesadd:prepend('.lua')
 vim.opt_local.suffixesadd:prepend('init.lua')
