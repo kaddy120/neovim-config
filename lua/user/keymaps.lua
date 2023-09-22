@@ -42,3 +42,10 @@ vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = tr
 vim.keymap.set("n", "<S-Right>", ":bnext<CR>", opts)
 -- Navigate buffers
 vim.keymap.set("n", "<S-Left>", ":bprevious<CR>", opts)
+
+-- move half a page up and down, and position a cursor in the middle of the screen
+vim.keymap.set("n", "<C-d>", "<C-d>zz", opts)
+vim.keymap.set("n", "<C-u>", "<C-u>zz", opts)
+
+vim.keymap.set("n", "n", "nzzzv", opts)
+vim.keymap.set("n", "N", "Nzzzv", opts)
