@@ -11,9 +11,6 @@ require("packer").startup(function(use)
 	-- Package manager
 	use("wbthomason/packer.nvim")
 	use("maxmellon/vim-jsx-pretty")
-	--- replace (use "rstacruz/sparkup") with emmet-vim
-	-- use 'mattn/emmet-vim'
-	--[[ use("rcarriga/nvim-notify") -- fency notification plugin ]]
 	use("windwp/nvim-ts-autotag") -- auto tags editing for things like html
 	use({ "kevinhwang91/nvim-ufo", requires = "kevinhwang91/promise-async" }) -- pretty code fold like vscode
 	use({ -- LSP Configuration & Plugins
