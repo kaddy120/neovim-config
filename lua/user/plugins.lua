@@ -42,7 +42,7 @@ require("packer").startup(function(use)
 
 	use("NvChad/nvim-colorizer.lua")
 	use("JoosepAlviste/nvim-ts-context-commentstring") -- language context commentting
-	use("sunjon/shade.nvim") --dims inactive window
+
 	use({ -- Autocompletion
 		"hrsh7th/nvim-cmp",
 		requires = {
@@ -210,3 +210,8 @@ vim.api.nvim_create_autocmd("BufWritePost", {
 	group = packer_group,
 	pattern = vim.fn.expand("$MYVIMRC"),
 })
+
+
+
+
+
