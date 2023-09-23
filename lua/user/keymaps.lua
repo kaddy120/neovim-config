@@ -48,3 +48,6 @@ vim.keymap.set("n", "<C-u>", "<C-u>zz", opts)
 
 vim.keymap.set("n", "n", "nzzzv", opts)
 vim.keymap.set("n", "N", "Nzzzv", opts)
+
+vim.keymap.set("n", "<leader>T", "<Plug>PlenaryTestFile", opts)
+vim.keymap.set("n", "<leader>xx", ":source %<CR>", opts)

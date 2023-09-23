@@ -101,7 +101,6 @@ local servers = {
 -- Setup neovim lua configuration
 require("neodev").setup({
   library = { plugins = { "nvim-dap-ui" }, types = true },
-  ...,
 })
 --
 -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
@@ -130,7 +129,6 @@ mason_lspconfig.setup_handlers({
 
 require("lspconfig").eslint.setup({
   capabilities = capabilities,
-  flags = { debounce_text_changes = 500 },
   on_attach = function(client, bufnr)
     client.server_capabilities.documentFormattingProvider = true
     --[[ if client.server_capabilities.documentFormattingProvider then ]]
@@ -144,6 +142,13 @@ require("lspconfig").eslint.setup({
     --[[   }) ]]
     --[[ end ]]
   end,
+})
+
+require("lspconfig").jsonls.setup({
+  filetypes = { "json", "jsonc" },
+  init_options = {
+    provideFormatter = false,
+  },
 })
 
 -- Turn on lsp status information

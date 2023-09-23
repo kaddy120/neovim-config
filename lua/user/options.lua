@@ -75,3 +75,6 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 
 -- enable :GBrowser to open a browser
 vim.cmd("command! -nargs=1 Browse silent execute '!open' shellescape(<q-args>,1)")
+
+-- support // and * comment for *.json file
+vim.api.nvim_command('autocmd BufRead,BufNewFile *.json set filetype=jsonc')
