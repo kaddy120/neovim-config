@@ -19,12 +19,14 @@ require("packer").startup(function(use)
 			-- Automatically install LSPs to stdpath for neovim
 			"williamboman/mason.nvim",
 			"williamboman/mason-lspconfig.nvim",
-
-			-- Useful status updates for LSP
-			"j-hui/fidget.nvim",
-
-			-- Additional lua configuration, makes nvim stuff amazing
 			"folke/neodev.nvim",
+			-- Useful status updates for LSP
+			use({
+				"j-hui/fidget.nvim",
+				tag = "legacy",
+			}),
+			-- Additional lua configuration, makes nvim stuff amazing
+			
 		},
 	})
 	-- A pretty diagnostics, references, telescope results, quickfix and location list
@@ -79,6 +81,8 @@ require("packer").startup(function(use)
 			"nvim-tree/nvim-tree.lua",
 		},
 	})
+
+	use("milisims/nvim-luaref")
 
 	use("jose-elias-alvarez/typescript.nvim")
 
@@ -210,8 +214,3 @@ vim.api.nvim_create_autocmd("BufWritePost", {
 	group = packer_group,
 	pattern = vim.fn.expand("$MYVIMRC"),
 })
-
-
-
-
-
