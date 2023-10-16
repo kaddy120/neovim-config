@@ -2,12 +2,22 @@
 local cmp = require("cmp")
 local luasnip = require("luasnip")
 
+require("luasnip.loaders.from_vscode").lazy_load()
+
 cmp.setup({
 	snippet = {
 		expand = function(args)
 			luasnip.lsp_expand(args.body)
 		end,
 	},
+	enabled = function()
+		local in_prompt = vim.api.nvim_buf_get_option(0, "buftype") == "prompt"
+		if in_prompt then -- this will disable cmp in the Telescope window (taken from the default config)
+			return false
+		end
+		local context = require("cmp.config.context")
+		return not (context.in_treesitter_capture("comment") == true or context.in_syntax_group("Comment"))
+	end,
 	mapping = cmp.mapping.preset.insert({
 		["<C-d>"] = cmp.mapping.scroll_docs(-4),
 		["<C-f>"] = cmp.mapping.scroll_docs(4),
@@ -16,7 +26,7 @@ cmp.setup({
 			behavior = cmp.ConfirmBehavior.Replace,
 			select = true,
 		}),
-		["<Tab>"] = cmp.mapping(function(fallback)
+		["<Down>"] = cmp.mapping(function(fallback)
 			if cmp.visible() then
 				cmp.select_next_item()
 			elseif luasnip.expand_or_jumpable() then
@@ -25,7 +35,7 @@ cmp.setup({
 				fallback()
 			end
 		end, { "i", "s" }),
-		["<S-Tab>"] = cmp.mapping(function(fallback)
+		["<Up>"] = cmp.mapping(function(fallback)
 			if cmp.visible() then
 				cmp.select_prev_item()
 			elseif luasnip.jumpable(-1) then
@@ -35,19 +45,22 @@ cmp.setup({
 			end
 		end, { "i", "s" }),
 	}),
-	sources = {
-		{ name = "luasnip" },
-		{ name = "nvim_lsp" },
+
+	sources = cmp.config.sources({
+		{ name = "luasnip" }, -- For luasnip users.
+		-- { name = 'snippy' }, -- For snippy users.
 		{ name = "nvim_lsp_signature_help" },
 		{ name = "path" },
-		{ name = "nvim-lsp" },
 		{ name = "nvim-lspconfig" },
-	},
-	{
-		{ name = "buffer" },
-	},
+		{ name = "nvim_lsp" },
+		{
+			{ name = "buffer" },
+		},
+	}),
 	completion = {
-		keyword_length = 4,
+		keyword_length = 2,
+		-- completeopts = "menu,menuone",
+		-- preselect = cmp.PreselectMode.Item,
 	},
 })
 
@@ -75,4 +88,3 @@ cmp.setup.cmdline(":", {
 })
 
 -- enable vscode-like snip
-require("luasnip.loaders.from_vscode").lazy_load()

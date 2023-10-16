@@ -51,3 +51,10 @@ vim.keymap.set("n", "N", "Nzzzv", opts)
 
 vim.keymap.set("n", "<leader>T", "<Plug>PlenaryTestFile", opts)
 vim.keymap.set("n", "<leader>xx", ":source %<CR>", opts)
+
+
+-- Remap ` to '
+vim.keymap.set('n', "'", '`', { noremap = true })
+vim.keymap.set('v', "'", '`', { noremap = true })
+vim.keymap.set('o', "'", '`', { noremap = true })
+

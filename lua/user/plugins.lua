@@ -26,7 +26,6 @@ require("packer").startup(function(use)
 				tag = "legacy",
 			}),
 			-- Additional lua configuration, makes nvim stuff amazing
-			
 		},
 	})
 	-- A pretty diagnostics, references, telescope results, quickfix and location list
@@ -43,6 +42,9 @@ require("packer").startup(function(use)
 	})
 
 	use("NvChad/nvim-colorizer.lua")
+
+	use({ "echasnovski/mini.nvim", branch = "stable" })
+	use("numToStr/Comment.nvim") -- "gc" to comment visual regions/lines
 	use("JoosepAlviste/nvim-ts-context-commentstring") -- language context commentting
 
 	use({ -- Autocompletion
@@ -57,6 +59,9 @@ require("packer").startup(function(use)
 			"neovim/nvim-lspconfig",
 		},
 	})
+
+	use("github/copilot.vim")
+
 	use({
 		"L3MON4D3/LuaSnip",
 		-- follow latest release.
@@ -163,7 +168,7 @@ require("packer").startup(function(use)
 	use("nvim-lualine/lualine.nvim") -- Fancier statusline
 	use({ "akinsho/bufferline.nvim", tag = "v3.*", requires = "nvim-tree/nvim-web-devicons" }) -- Show open buffer statusline
 	use("lukas-reineke/indent-blankline.nvim") -- Add indentation guides even on blank lines
-	use("numToStr/Comment.nvim") -- "gc" to comment visual regions/lines
+
 	use("tpope/vim-sleuth") -- Detect tabstop and shiftwidth automatically
 
 	use("nvim-telescope/telescope-dap.nvim") -- use telescope to interface dap

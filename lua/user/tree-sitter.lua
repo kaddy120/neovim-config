@@ -2,7 +2,26 @@
 -- See `:help nvim-treesitter`
 require("nvim-treesitter.configs").setup({
 	-- Add languages to be installed here that you want installed for treesitter
-	ensure_installed = { "c", "cpp", "go", "lua", "python", "rust", "typescript", "help", "vim", "markdown" },
+	-- 'astro', 'css', 'glimmer', 'graphql', 'handlebars', 'html', 'javascript',
+	-- "lua", "nix", "php", "python", "rescript", "scss", "svelte", "tsx", "twig", "typescript", "vim", "vue",
+	ensure_installed = {
+		"c",
+		"tsx",
+		"css",
+		"html",
+		"javascript",
+		"scss",
+		"cpp",
+		"go",
+		"lua",
+		"python",
+		"rust",
+		"typescript",
+		"help",
+		"vim",
+		"html",
+		"markdown",
+	},
 	autotag = {
 		enable = true,
 	},
@@ -64,19 +83,15 @@ require("nvim-treesitter.configs").setup({
 	context_commentstring = {
 		enable = true,
 		enable_autocmd = false,
-		config = {
-			typescript = { __default = "// %s", __multiline = "/* %s */" },
-			typescriptreact = { __default = "// %s", __multiline = "/* %s */" },
-		},
 	},
 })
 
-local parser_configs = require("nvim-treesitter.parsers").get_parser_configs()
-
-parser_configs.markdown = {
-	install_info = {
-		url = "https://github.com/ikatyang/tree-sitter-markdown",
-		files = { "src/parser.c", "src/scanner.cc" },
-	},
-	filetype = "markdown",
-}
+-- local parser_configs = require("nvim-treesitter.parsers").get_parser_configs()
+--
+-- parser_configs.markdown = {
+-- 	install_info = {
+-- 		url = "https://github.com/ikatyang/tree-sitter-markdown",
+-- 		files = { "src/parser.c", "src/scanner.cc" },
+-- 	},
+-- 	filetype = "markdown",
+-- }

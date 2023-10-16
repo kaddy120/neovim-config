@@ -1,25 +1,50 @@
 local status_ok, comment = pcall(require, "Comment")
 if not status_ok then
-  return
+	return
 end
 
-comment.setup{
-  pre_hook = function(ctx)
-    -- For inlay hints
-      local U = require "Comment.utils"
-      -- Determine the location where to calculate commentstring from
-      local location = nil
-    -- Determine whether to use linewise or blockwise commentstring
-      local type = ctx.ctype == U.ctype.linewise and "__default" or "__multiline"
-      if ctx.ctype == U.ctype.blockwise then
-        location = require("ts_context_commentstring.utils").get_cursor_location()
-      elseif ctx.cmotion == U.cmotion.v or ctx.cmotion == U.cmotion.V then
-        location = require("ts_context_commentstring.utils").get_visual_start_location()
-      end
+require("mini.comment").setup({
+	-- Options which control module behavior
+	options = {
+		-- Function to compute custom 'commentstring' (optional)
+		custom_commentstring = function()
+			return require("ts_context_commentstring.internal").calculate_commentstring() or vim.bo.commentstring
+		end,
 
-      return require("ts_context_commentstring.internal").calculate_commentstring {
-        key = ctx.ctype == U.ctype.line and "__default" or "__multiline",
-        location = location,
-      }
-    end
-}
+		-- Whether to ignore blank lines
+		ignore_blank_line = false,
+
+		-- Whether to recognize as comment only lines without indent
+		start_of_line = false,
+
+		-- Whether to ensure single space pad for comment parts
+		pad_comment_parts = true,
+	},
+
+	-- Module mappings. Use `''` (empty string) to disable one.
+	mappings = {
+		-- Toggle comment (like `gcip` - comment inner paragraph) for both
+		-- Normal and Visual modes
+		comment = "gc",
+
+		-- Toggle comment on current line
+		comment_line = "gcc",
+
+		-- Define 'comment' textobject (like `dgc` - delete whole comment block)
+		textobject = "gc",
+	},
+
+	-- Hook functions to be executed at certain stage of commenting
+	hooks = {
+		-- Before successful commenting. Does nothing by default.
+		pre = function() end,
+		-- After successful commenting. Does nothing by default.
+		post = function() end,
+	},
+})
+
+-- comment.setup({
+-- 	pre_hook = require("ts_context_commentstring.integrations.comment_nvim").create_pre_hook(),
+-- })
+
+

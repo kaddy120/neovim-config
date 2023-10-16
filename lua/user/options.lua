@@ -11,9 +11,13 @@ vim.o.cursorline = true
 vim.o.expandtab = true
 vim.o.tabstop = 1
 
+vim.o.textwidth = 80
+--[[ vim.o.colorcolumn=80 ]]
+
 -- set relativenumber
 --vim.wo.number = true
 vim.wo.relativenumber = true
+
 
 -- Enable mouse mode
 vim.o.mouse = 'a'
@@ -78,3 +82,21 @@ vim.cmd("command! -nargs=1 Browse silent execute '!open' shellescape(<q-args>,1)
 
 -- support // and * comment for *.json file
 vim.api.nvim_command('autocmd BufRead,BufNewFile *.json set filetype=jsonc')
+
+-- prevent starting a new line with a comment
+-- vim.opt_local.formatoptions:remove({ 'c', 'r', 'o' })
+-- vim.api.nvim_command('autocmd BufEnter * vim.opt_local.formatoptions:remove({ "c", "r", "o" })')
+-- Add this to your init.lua file
+
+vim.cmd([[
+  augroup RemoveFormatOptions
+    autocmd!
+    autocmd BufEnter * lua vim.opt_local.formatoptions:remove({ 'c', 'r', 'o' })
+  augroup END
+]])
+
+
+vim.api.nvim_create_autocmd({ 'BufEnter', 'BufNewFile' }, {
+  pattern = '.env*',
+  command = 'set filetype=conf',
+})

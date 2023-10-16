@@ -65,9 +65,13 @@ local servers = {
       "typescript",
       "typescriptreact",
       "typescript.tsx",
-      "javascriptreact",
       "javascript.jsx",
+      "javascriptreact",
     },
+    preferences = {
+      includePackageJsonAutoImports= "on",
+      includeCompletionsForImportStatements = true;
+    }
     -- cmd = {"typescript-language-server", "--stdio"}
   },
   tailwindcss = {
@@ -84,6 +88,7 @@ local servers = {
       },
     },
   },
+  --
   -- sumneko_lua = {
   --   Lua = {
   --     workspace = {
@@ -151,6 +156,7 @@ require("lspconfig").jsonls.setup({
   },
 })
 
+require('lspconfig').html.setup {}
 -- Turn on lsp status information
 require("fidget").setup()
 
